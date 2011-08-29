@@ -74,6 +74,27 @@ body {
  min-height: 300px;
  text-align: center;
 }
+#content a:link {
+	color: #000000;
+	
+	text-decoration: none;
+}
+#content a:visited{
+	color: #000000;
+	
+	text-decoration: none;
+}
+#content a:hover{
+	color: white;
+	background-color: #000000;
+	text-decoration: none;
+}
+#content a:active{
+	color: white;
+	background-color: #000000;
+	text-decoration: none;
+}
+
 #footer { 
  width: 816px;
  color: #FFFFFF;

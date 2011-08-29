@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20110829151510) do
     t.integer  "verliehen"
     t.string   "userids"
     t.integer  "anzahl"
+    t.string   "bild"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -48,6 +49,8 @@ ActiveRecord::Schema.define(:version => 20110829151510) do
     t.string   "strasse"
     t.string   "ort"
     t.string   "plz"
+    t.string   "role"
+    t.string   "dvdslent"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
