@@ -9,6 +9,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
 	  t.string :strasse
 	  t.string :ort
 	  t.string :plz
+	  t.string :role
+	  t.string :dvdslent
 
       # t.encryptable
       # t.confirmable

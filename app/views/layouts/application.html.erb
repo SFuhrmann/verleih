@@ -14,18 +14,21 @@
 
 </div>
 
-<div id="navigation">
-Home &nbsp;&nbsp; Kategorien &nbsp;&nbsp; Account &nbsp;&nbsp; Abmelden         
-<% if user_signed_in? %>
-  <%= link_to('Logout', destroy_user_session_path, :methode => :delete) %>        
-<% else %>
-  <%= link_to('Login', new_user_session_path)  %>  
-<% end %>
+<div id="navigation"> 
+<%= link_to'Home', root_path %>&nbsp;&nbsp;
+<%= link_to'DVDs', dvds_path %>  &nbsp;&nbsp;      
+
 
 <% if user_signed_in? %>
-  <%= link_to('Edit account', edit_user_registration_path) %>
+  <%= link_to('Account', edit_user_registration_path) %>
 <% else %>
-  <%= link_to('Sign up', new_user_registration_path)  %>
+  <%= link_to('Anmelden', new_user_registration_path)  %>
+<% end %>
+&nbsp;&nbsp;
+<% if user_signed_in? %>
+  <%= link_to("#{current_user.name} abmelden", destroy_user_session_path, :methode => :delete) %>        
+<% else %>
+  <%= link_to('Login', new_user_session_path)  %>  
 <% end %>
 
 </div>
@@ -35,7 +38,7 @@ Home &nbsp;&nbsp; Kategorien &nbsp;&nbsp; Account &nbsp;&nbsp; Abmelden
 </div>
 
 <div id="footer">
-<%= link_to "Impressum" , pages_impressum_path %> <%= link_to "Kontakt" , pages_kontakt_path %>
+<%= link_to "Impressum" , pages_impressum_path %>&nbsp;&nbsp; <%= link_to "Kontakt" ,  pages_kontakt_path %>
 </div>
 </div>
 </body>
