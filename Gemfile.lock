@@ -30,13 +30,13 @@ GEM
     activesupport (3.0.7)
     arel (2.0.10)
     babosa (0.2.2)
-    bcrypt-ruby (2.1.4)
-    bcrypt-ruby (2.1.4-x86-mingw32)
+    bcrypt-ruby (3.0.0)
+    bcrypt-ruby (3.0.0-x86-mingw32)
     builder (2.1.2)
-    devise (1.2.rc)
-      bcrypt-ruby (~> 2.1.2)
-      orm_adapter (~> 0.0.2)
-      warden (~> 1.0.2)
+    devise (1.4.3)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.0.3)
+      warden (~> 1.0.3)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     friendly_id (3.2.1)
@@ -86,7 +86,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  devise (= 1.2.rc)
+  devise (= 1.4.3)
   friendly_id (= 3.2.1)
   rails (= 3.0.7)
   sqlite3-ruby
