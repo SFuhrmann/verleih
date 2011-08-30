@@ -1,3 +1,6 @@
+<% if user_signed_in? %>
+		<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
+
 <h1>Listing searches</h1>
 
 <table>
@@ -23,3 +26,6 @@
 <br />
 
 <%= link_to 'New Search', new_search_path %>
+
+<% end %>
+<% end %>
