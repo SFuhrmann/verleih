@@ -1,4 +1,6 @@
 Verleih::Application.routes.draw do
+  resources :searches
+
   get "users/index"
 
   get "users/show"

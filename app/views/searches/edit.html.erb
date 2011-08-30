@@ -1,0 +1,65 @@
+<h1>Editing search</h1>
+
+<%= render 'form' %>
+
+
+
+
+
+<h1>Listing dvds</h1>
+
+<table>
+  <tr>
+	<th></th>
+    <th>Name</th>
+	
+	<% if user_signed_in? %>
+		<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
+			<th>Verliehen</th>
+			<th>Userids</th>
+			<th>Anzahl</th>
+		<% end %>
+	<% end %>
+	
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @dvds.each do |dvd| %>
+  <tr>
+	<td><%= image_tag(dvd.bild) %></td>
+    <td><%= dvd.name %></td>
+	
+	<% if user_signed_in? %>
+		<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
+			<td><%= dvd.verliehen %></td>
+			<td><%= dvd.userids %></td>
+			<td><%= dvd.anzahl %></td>
+		<% end %>
+	<% end %>
+	
+    <td><%= link_to 'Info', dvd %></td>
+	
+	<% if user_signed_in? %>
+		<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
+			<td><%= link_to 'Bearbeiten', edit_dvd_path(dvd) %></td>
+		<% else %>
+			<% if dvd.verliehen < dvd.anzahl %>
+				<td><%= link_to 'Leihen', edit_dvd_path(dvd) %></td>
+			<% else %>
+				<td>Leihen</td>
+			<% end %>
+		<% end %>
+	<% end %>
+    <td><%= link_to 'Loeschen', dvd, :confirm => 'Sicher?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<% if user_signed_in? %>
+	<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
+		<%= link_to 'New Dvd', new_dvd_path %>
+	<% end %>
+<% end %>
