@@ -129,7 +129,11 @@ class DvdsController < ApplicationController
 					else
 						@dvd.userids = "#{@dvd.userids}-#{current_user.id}"
 					end
-					respond_to do |format|
+					@x = @x + 1
+					
+
+				end
+				respond_to do |format|
 						if @dvd.update_attributes(params[:dvd])
 							format.html { redirect_to(@dvd, :notice => 'DVD wurde erfolgreich zurueckgegeben.') }
 							format.xml  { head :ok }
@@ -137,7 +141,6 @@ class DvdsController < ApplicationController
 							format.html { render :action => "edit" }
 							format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
 						end
-					end
 				end
 			end
 		end
