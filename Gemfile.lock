@@ -30,12 +30,8 @@ GEM
     activesupport (3.0.7)
     arel (2.0.10)
     babosa (0.2.2)
-<<<<<<< HEAD
-    bcrypt-ruby (2.1.4)
-=======
     bcrypt-ruby (3.0.0)
     bcrypt-ruby (3.0.0-x86-mingw32)
->>>>>>> 28c1cdcfc0dcefc6abc4f93c4b54c270c095bbd3
     builder (2.1.2)
     devise (1.4.3)
       bcrypt-ruby (~> 3.0)

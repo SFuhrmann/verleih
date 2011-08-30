@@ -1,3 +1,17 @@
+<head>
+<script type="text/javascript" src="js/prototype.js"></script>
+<script type="text/javascript" src="js/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="js/lightbox.js"></script>
+<link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+
+
+
+</head>
+<body>
+
+
+
+
 <h1>Listing dvds</h1>
 
 <table>
@@ -20,7 +34,7 @@
 
 <% @dvds.each do |dvd| %>
   <tr>
-	<td><%= image_tag(dvd.bild) %></td>
+	<td><%= image_tag (dvd.bild),  :height => "50" %></td>
     <td><%= dvd.name %></td>
 	
 	<% if user_signed_in? %>
@@ -77,3 +91,4 @@
 		<%= link_to 'New Dvd', new_dvd_path %>
 	<% end %>
 <% end %>
+</body>
