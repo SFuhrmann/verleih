@@ -1,4 +1,10 @@
-<h1>Editing dvd</h1>
+<% if user_signed_in? %>
+	<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
+		<h1>DVD bearbeiten</h1>
+	<% else %>
+		<h1>DVD ausleihen</h1>
+	<%end%>
+<%end%>
 
 <%= form_for(@dvd) do |f| %>
   <% if @dvd.errors.any? %>
@@ -30,6 +36,10 @@
 		<div class="field">
 			<%= f.label :beschreibung %><br />
 			<%= f.text_area :beschreibung, :size => '22x8' %>
+		</div>
+		<div class="field">
+			<%= f.label :tags %><br />
+			<%= f.text_field :tags %>
 		</div>
 		<div class="field">
 			<%= f.label :anzahl %><br />

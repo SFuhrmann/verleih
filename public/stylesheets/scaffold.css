@@ -49,7 +49,7 @@ body {
  padding: 10px;
  border: none;
  height: 200px;
- margin: 10px 0px 5px 0px;
+ margin: 10px 0px 5px 10px;
  background: #FFFFFF;
  text-align: center;
  background: url(banner.jpg); background-repeat: no-repeat;
@@ -58,9 +58,10 @@ body {
 #navigation {
  width: 816px;
  color: #FFFFFF;
- padding: 10px;
+ padding: 10px 0 0 0;
+ height: 30px;
  border: none;
- margin: 0px 0px 5px 0px;
+ margin: 0px 0px 5px 10px;
  text-align: center;
  background: url(back.jpg);
 }
@@ -69,8 +70,8 @@ body {
  color: #000000;
  border: none;
  background: #FFFFFF;
- margin: 0px 0px 5px 0px;
- padding: 10px;
+ margin: 10px 0px 5px 10px;
+ padding: 0px;
  min-height: 300px;
  text-align: center;
 }
@@ -100,8 +101,9 @@ body {
  color: #FFFFFF;
  border: none;
  background: #999999;
- margin: 0px 0px 10px 0px;
- padding: 10px;
+ margin: 0px 0px 10px 10px;
+ padding: 10px 0 0 0;
+ height: 30px;
  text-align: center; 
  background: url(back.jpg);
 }

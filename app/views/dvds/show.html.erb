@@ -1,33 +1,35 @@
 <p id="notice"><%= notice %></p>
 
-<%= image_tag (dvd.bild),  :size => "400x268" %></a>
+<%= image_tag (@dvd.bild),  :size => "400x268" %></a>
+
 
 <p>
   <b>Name:</b>
   <%= @dvd.name %>
 </p>
-
+<br>
 <p>
   <b>Beschreibung:</b>
   <%= @dvd.beschreibung %>
 </p>
+<br>
 <% if user_signed_in? %>
 	<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
 <p>
   <b>Verliehen:</b>
   <%= @dvd.verliehen %>
 </p>
-
+<br>
 <p>
   <b>Userids:</b>
   <%= @dvd.userids %>
 </p>
-
+<br>
 <p>
   <b>Anzahl:</b>
   <%= @dvd.anzahl %>
 </p>
-
+<br>
 	<% end %>
 <% end %>
 

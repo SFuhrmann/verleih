@@ -12,7 +12,7 @@
 
 
 
-<h1>Listing dvds</h1>
+<h1>Alle DVDs</h1>
 
 <table>
   <tr>
@@ -34,7 +34,7 @@
 
 <% @dvds.each do |dvd| %>
   <tr>
-	<td><%= image_tag (dvd.bild),  :height => "50" %></td>
+	<td><%= image_tag (dvd.bild),  :height => "75" %></td>
     <td><%= dvd.name %></td>
 	
 	<% if user_signed_in? %>
