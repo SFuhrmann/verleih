@@ -35,6 +35,12 @@ class SearchesController < ApplicationController
   # GET /searches/1/edit
   def edit
     @search = Search.find(params[:id])
+    @dvds = Dvd.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @dvds }
+    end
   end
 
   # POST /searches
@@ -60,7 +66,7 @@ class SearchesController < ApplicationController
 
     respond_to do |format|
       if @search.update_attributes(params[:search])
-        format.html { redirect_to(@search, :notice => 'Search was successfully updated.') }
+        format.html { redirect_to(edit_search_path, :notice => 'Search was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
