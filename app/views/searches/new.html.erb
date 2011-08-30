@@ -1,5 +1,10 @@
+<% if user_signed_in? %>
+		<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
 <h1>New search</h1>
 
 <%= render 'form' %>
 
 <%= link_to 'Back', searches_path %>
+
+<% end %>
+<% end %>
