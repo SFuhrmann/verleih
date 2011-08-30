@@ -1,6 +1,74 @@
 <h1>Editing dvd</h1>
 
-<%= render 'form' %>
+<%= form_for(@dvd) do |f| %>
+  <% if @dvd.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dvd.errors.count, "error") %> prohibited this dvd from being saved:</h2>
 
-<%= link_to 'Show', @dvd %> |
-<%= link_to 'Back', dvds_path %>
+      <ul>
+      <% @dvd.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% if user_signed_in? %>
+	<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
+		<div class="field">
+			<% @dvdusers = @dvd.userids.split('-') %>
+			<% @x = 0 %>
+			<% while @x < @dvdusers.size %>
+				<%= @dvdusers[@x] %> 
+				<% @x = @x + 1 %>
+			<% end %>
+		</div>
+
+		<div class="field">
+			<%= f.label :name %><br />
+			<%= f.text_field :name %>	
+		</div>
+		<div class="field">
+			<%= f.label :beschreibung %><br />
+			<%= f.text_area :beschreibung, :size => '22x8' %>
+		</div>
+		<div class="field">
+			<%= f.label :anzahl %><br />
+			<%= f.text_field :anzahl %>
+		</div>
+		<div class="field">
+			<%= f.label :bild %><br />
+			<%= f.text_field :bild %>
+		</div>
+		<div class="field">
+			<%= f.label :genre %><br />
+			<%= f.text_field :genre %>
+		</div>
+		<div class="actions">
+				<%= f.submit "Speichern"%>
+		</div>
+		
+	<% else %>
+	<% @x = 0 %>
+	<% @y = false %>
+	<% @dvdusers = @dvd.userids.split("-") %>
+	<% while @x < @dvdusers.size %>
+		<% if @dvdusers[@x] == current_user.id %>
+			<% @y = true %>
+		<% end %>
+		<% @x = @x +1 %>
+	<% end %>
+	<% if @y %>
+		<div class="actions">
+			<%= f.submit "Zurueckgeben"%>
+		</div>
+	<% else %>
+		<div class="actions">
+			<%= f.submit "Ausleihen"%>
+		</div>
+	<% end %>
+<% end %>
+<% end %>
+<% end %>
+
+<%= link_to 'Info', @dvd %> |
+<%= link_to 'Zurueck', dvds_path %>
