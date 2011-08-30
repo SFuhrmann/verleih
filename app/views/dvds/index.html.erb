@@ -38,35 +38,37 @@
 			<td><%= link_to 'Bearbeiten', edit_dvd_path(dvd) %></td>
 		<% else %>
 			
-	<% @x = 0 %>
-	<% @y = false %>
-	<% @dvdusers = dvd.userids.split("-") %>
-	<% while @x < @dvdusers.size %>
-		<% if @dvdusers[@x] == current_user.id %>
-			<% @y = true %>
-		<% end %>
-		<% @x = @x + 1 %>
-	<% end %>
+			<% @x = 0 %>
+			<% @y = false %>
+			<% @dvdusers = dvd.userids.split("-") %>
+			<% while @x < @dvdusers.size %>
+				<% if @dvdusers[@x] == current_user.id.to_s %>
+				    
+					<% @y = true %>
+				<% end %>
+				<% @x = @x + 1 %>
+			<% end %>
 	
-	<% if @y %>
-			<td><%= link_to 'Zurueckgeben', edit_dvd_path(dvd) %></td>
-	<% else %>
-		<% if dvd.verliehen < dvd.anzahl %>
-				<td><%= link_to 'Leihen', edit_dvd_path(dvd) %></td>
-		<% else %>
-				<td>Leihen</td>
+			<% if @y == true %>
+				<td><%= link_to 'Zurueckgeben', edit_dvd_path(dvd) %></td>
+			<% else %>
+				<% if dvd.verliehen < dvd.anzahl %>
+					<td><%= link_to 'Leihen', edit_dvd_path(dvd) %></td>
+				<% else %>
+					<td>Leihen</td>
+				<% end %>
+			<% end %>
 		<% end %>
 	<% end %>
-	<% end %>
-	<% if user_signed_in? %>
-		<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
-			<td><%= link_to 'Loeschen', dvd, :confirm => 'Sicher?', :method => :delete %></td>
+		<% if user_signed_in? %>
+			<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
+				<td><%= link_to 'Loeschen', dvd, :confirm => 'Sicher?', :method => :delete %></td>
+			<% end %>
 		<% end %>
+	</tr>
 	<% end %>
-  </tr>
-<% end %>
 
-<% end %>
+
 </table>
 
 <br />

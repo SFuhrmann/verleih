@@ -41,6 +41,9 @@ class DvdsController < ApplicationController
   # POST /dvds.xml
   def create
     @dvd = Dvd.new(params[:dvd])
+	
+	@dvd.userids = ""
+	@dvd.verliehen = 0
 
     respond_to do |format|
       if @dvd.save
@@ -71,82 +74,73 @@ class DvdsController < ApplicationController
 	
 	if current_user.role == "admin" || current_user.role == "mitarbeiter"
 		respond_to do |format|
-		if @dvd.update_attributes(params[:dvd])
-			format.html { redirect_to(@dvd, :notice => 'DVD wurde gespeichert.') }
-			format.xml  { head :ok }
-		else
-			format.html { render :action => "edit" }
-			format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
-		end
- 
-		end
-	else
-	
-	@dvdusers = @dvd.userids.split('-')
-	@x = 0
-	
-	while @x < @dvdusers.size
-		if @dvdusers[@x] == current_user.id.to_s
-			alreadylent = true
-		end
-		@x = @x + 1
-	end
-	if user_signed_in?
-		if alreadylent != true
-			@dvd.verliehen = @dvd.verliehen + 1
-			if @dvd.userids == ""
-				@dvd.userids = "#{current_user.id}"
-			else
-				@dvd.userids = "#{@dvd.userids}-#{current_user.id}"
-			end
-			if current_user.dvdslent == ""
-				current_user.dvdslent == "#{@dvd.id}"
-			else
-				current_user.dvdslent = "#{current_user.dvdslent}-#{@dvd.id}"
-			end
-			respond_to do |format|
-				if @dvd.update_attributes(params[:dvd])
-					format.html { redirect_to(@dvd, :notice => 'Dvd wurde erfolgreich ausgeliehen.') }
-					format.xml  { head :ok }
-				else
-					format.html { render :action => "edit" }
-					format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
-				end
-			end
-		else
-		@x = 0
-		@dvd.userids = ""
-		@dvdusers = @dvd.userids.split("-")
-		while @x < @dvdusers.size
-		if @dvdusers[@x] == current_user.id
-			@dvdusers.delete(@x)
-		elsif @dvd.userids == ""
-			@dvd.userids = "#{dvdusers[@x]}"
-		else
-			@dvd.userids = "#{@dvd.userids}-#{current_user.id}"
-		end
-			respond_to do |format|
 			if @dvd.update_attributes(params[:dvd])
-				format.html { redirect_to(@dvd, :notice => 'DVD wurde erfolgreich zurueckgegeben.') }
+				format.html { redirect_to(@dvd, :notice => 'DVD wurde gespeichert.') }
 				format.xml  { head :ok }
 			else
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
 			end
-			end
-		end
 		end
 	else
-		respond_to do |format|
-		if @dvd.update_attributes(params[:dvd])
-			format.html { redirect_to(@dvd, :notice => 'Log In notwendig, um DVDs auszuleihen!') }
-			format.xml  { head :ok }
-		else
-			format.html { render :action => "edit" }
-			format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
+	
+		@dvdusers = @dvd.userids.split('-')
+		@x = 0
+	
+		while @x < @dvdusers.size
+			if @dvdusers[@x] == current_user.id.to_s
+				alreadylent = true
+			end
+			@x = @x + 1
 		end
+		if user_signed_in?
+			if alreadylent != true
+				@dvd.verliehen = @dvd.verliehen + 1
+				if @dvd.userids == ""
+					@dvd.userids = "#{current_user.id}"
+				else
+					@dvd.userids = "#{@dvd.userids}-#{current_user.id}"
+				end
+				if current_user.dvdslent == ""
+					current_user.dvdslent == "#{@dvd.id}"
+				else
+					current_user.dvdslent = "#{current_user.dvdslent}-#{@dvd.id}"
+				end
+				respond_to do |format|
+					if @dvd.update_attributes(params[:dvd])
+						format.html { redirect_to(@dvd, :notice => 'Dvd wurde erfolgreich ausgeliehen.') }
+						format.xml  { head :ok }
+					else
+						format.html { render :action => "edit" }
+						format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
+					end
+				end
+			else
+				@dvd.verliehen = @dvd.verliehen - 1
+				@x = 0
+				@dvdusers = @dvd.userids.split("-")
+				@dvd.userids = ""
+		
+				while @x < @dvdusers.size
+					if @dvdusers[@x] == current_user.id.to_s
+						@dvdusers.delete(@x)
+					elsif @dvd.userids == ""
+						@dvd.userids = "#{@dvdusers[@x]}"
+					else
+						@dvd.userids = "#{@dvd.userids}-#{current_user.id}"
+					end
+					respond_to do |format|
+						if @dvd.update_attributes(params[:dvd])
+							format.html { redirect_to(@dvd, :notice => 'DVD wurde erfolgreich zurueckgegeben.') }
+							format.xml  { head :ok }
+						else
+							format.html { render :action => "edit" }
+							format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
+						end
+					end
+				end
+			end
 		end
 	end
-	end
-	end
+end
 end
