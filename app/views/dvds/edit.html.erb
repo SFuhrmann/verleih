@@ -52,12 +52,12 @@
 	<% @y = false %>
 	<% @dvdusers = @dvd.userids.split("-") %>
 	<% while @x < @dvdusers.size %>
-		<% if @dvdusers[@x] == current_user.id %>
+		<% if @dvdusers[@x] == current_user.id.to_s %>
 			<% @y = true %>
 		<% end %>
 		<% @x = @x +1 %>
 	<% end %>
-	<% if @y %>
+	<% if @y == true%>
 		<div class="actions">
 			<%= f.submit "Zurueckgeben"%>
 		</div>

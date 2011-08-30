@@ -1,5 +1,5 @@
 <h1>New dvd</h1>
-
+<%= form_for(@dvd) do |f| %>
 <div class="field">
 			<%= f.label :name %><br />
 			<%= f.text_field :name %>	
@@ -21,5 +21,9 @@
 			<%= f.label :genre %><br />
 			<%= f.text_field :genre %>
 		</div>
+		<div class="actions">
+    <%= f.submit %>
+  </div>
+<%end%>
 
 <%= link_to 'Back', dvds_path %>

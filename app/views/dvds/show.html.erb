@@ -9,7 +9,8 @@
   <b>Beschreibung:</b>
   <%= @dvd.beschreibung %>
 </p>
-
+<% if user_signed_in? %>
+	<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
 <p>
   <b>Verliehen:</b>
   <%= @dvd.verliehen %>
@@ -25,6 +26,35 @@
   <%= @dvd.anzahl %>
 </p>
 
+	<% end %>
+<% end %>
 
-<%= link_to 'Edit', edit_dvd_path(@dvd) %> |
+
+<% if user_signed_in? %>
+		<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
+			<td><%= link_to 'Bearbeiten', edit_dvd_path(@dvd) %></td>
+		<% else %>
+			
+			<% @x = 0 %>
+			<% @y = false %>
+			<% @dvdusers = @dvd.userids.split("-") %>
+			<% while @x < @dvdusers.size %>
+				<% if @dvdusers[@x] == current_user.id.to_s %>
+				    
+					<% @y = true %>
+				<% end %>
+				<% @x = @x + 1 %>
+			<% end %>
+	
+			<% if @y == true %>
+				<td><%= link_to 'Zurueckgeben', edit_dvd_path(@dvd) %></td>
+			<% else %>
+				<% if @dvd.verliehen < @dvd.anzahl %>
+					<td><%= link_to 'Leihen', edit_dvd_path(@dvd) %></td>
+				<% else %>
+					<td>Leihen</td>
+				<% end %>
+			<% end %>
+		<% end %>
+	<% end %> |
 <%= link_to 'Back', dvds_path %>
