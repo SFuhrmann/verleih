@@ -53,31 +53,100 @@ class DvdsController < ApplicationController
     end
   end
 
+  
+  #		while @x < @lendingusers.size
+#			if @dvd.userids == ""
+#				@dvd.userids = '#{@lendingusers[@x]}' 
+#			else 
+#				@dvd.userids = '#{@dvd.userids}, #{@lendingusers[@x]}' 
+#			end 
+#		end 
+  
+  
+  
   # PUT /dvds/1
   # PUT /dvds/1.xml
   def update
     @dvd = Dvd.find(params[:id])
-
-    respond_to do |format|
-      if @dvd.update_attributes(params[:dvd])
-        format.html { redirect_to(@dvd, :notice => 'Dvd was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /dvds/1
-  # DELETE /dvds/1.xml
-  def destroy
-    @dvd = Dvd.find(params[:id])
-    @dvd.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(dvds_url) }
-      format.xml  { head :ok }
-    end
-  end
+	
+	if current_user.role == "admin" || current_user.role == "mitarbeiter"
+		respond_to do |format|
+		if @dvd.update_attributes(params[:dvd])
+			format.html { redirect_to(@dvd, :notice => 'DVD wurde gespeichert.') }
+			format.xml  { head :ok }
+		else
+			format.html { render :action => "edit" }
+			format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
+		end
+ 
+		end
+	else
+	
+	@dvdusers = @dvd.userids.split('-')
+	@x = 0
+	
+	while @x < @dvdusers.size
+		if @dvdusers[@x] == current_user.id.to_s
+			alreadylent = true
+		end
+		@x = @x + 1
+	end
+	if user_signed_in?
+		if alreadylent != true
+			@dvd.verliehen = @dvd.verliehen + 1
+			if @dvd.userids == ""
+				@dvd.userids = "#{current_user.id}"
+			else
+				@dvd.userids = "#{@dvd.userids}-#{current_user.id}"
+			end
+			if current_user.dvdslent == ""
+				current_user.dvdslent == "#{@dvd.id}"
+			else
+				current_user.dvdslent = "#{current_user.dvdslent}-#{@dvd.id}"
+			end
+			respond_to do |format|
+				if @dvd.update_attributes(params[:dvd])
+					format.html { redirect_to(@dvd, :notice => 'Dvd wurde erfolgreich ausgeliehen.') }
+					format.xml  { head :ok }
+				else
+					format.html { render :action => "edit" }
+					format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
+				end
+			end
+		else
+		@x = 0
+		@dvd.userids = ""
+		@dvdusers = @dvd.userids.split("-")
+		while @x < @dvdusers.size
+		if @dvdusers[@x] == current_user.id
+			@dvdusers.delete(@x)
+		elsif @dvd.userids == ""
+			@dvd.userids = "#{dvdusers[@x]}"
+		else
+			@dvd.userids = "#{@dvd.userids}-#{current_user.id}"
+		end
+			respond_to do |format|
+			if @dvd.update_attributes(params[:dvd])
+				format.html { redirect_to(@dvd, :notice => 'DVD wurde erfolgreich zurueckgegeben.') }
+				format.xml  { head :ok }
+			else
+				format.html { render :action => "edit" }
+				format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
+			end
+			end
+		end
+		end
+	else
+		respond_to do |format|
+		if @dvd.update_attributes(params[:dvd])
+			format.html { redirect_to(@dvd, :notice => 'Log In notwendig, um DVDs auszuleihen!') }
+			format.xml  { head :ok }
+		else
+			format.html { render :action => "edit" }
+			format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
+		end
+		end
+	end
+	end
+	end
 end

@@ -37,15 +37,35 @@
 		<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
 			<td><%= link_to 'Bearbeiten', edit_dvd_path(dvd) %></td>
 		<% else %>
-			<% if dvd.verliehen < dvd.anzahl %>
+			
+	<% @x = 0 %>
+	<% @y = false %>
+	<% @dvdusers = dvd.userids.split("-") %>
+	<% while @x < @dvdusers.size %>
+		<% if @dvdusers[@x] == current_user.id %>
+			<% @y = true %>
+		<% end %>
+		<% @x = @x + 1 %>
+	<% end %>
+	
+	<% if @y %>
+			<td><%= link_to 'Zurueckgeben', edit_dvd_path(dvd) %></td>
+	<% else %>
+		<% if dvd.verliehen < dvd.anzahl %>
 				<td><%= link_to 'Leihen', edit_dvd_path(dvd) %></td>
-			<% else %>
+		<% else %>
 				<td>Leihen</td>
-			<% end %>
 		<% end %>
 	<% end %>
-    <td><%= link_to 'Loeschen', dvd, :confirm => 'Sicher?', :method => :delete %></td>
+	<% end %>
+	<% if user_signed_in? %>
+		<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
+			<td><%= link_to 'Loeschen', dvd, :confirm => 'Sicher?', :method => :delete %></td>
+		<% end %>
+	<% end %>
   </tr>
+<% end %>
+
 <% end %>
 </table>
 

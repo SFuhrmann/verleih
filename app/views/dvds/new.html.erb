@@ -1,5 +1,25 @@
 <h1>New dvd</h1>
 
-<%= render 'form' %>
+<div class="field">
+			<%= f.label :name %><br />
+			<%= f.text_field :name %>	
+		</div>
+		<div class="field">
+			<%= f.label :beschreibung %><br />
+			<%= f.text_area :beschreibung, :size => '22x8' %>
+		</div>
+		<div class="field">
+			<%= f.label :anzahl %><br />
+			<%= f.text_field :anzahl %>
+		</div>
+		<div class="field">
+			<%= f.label :bild %><br />
+			<%= f.text_field :bild %>
+		</div>
+
+<div class="field">
+			<%= f.label :genre %><br />
+			<%= f.text_field :genre %>
+		</div>
 
 <%= link_to 'Back', dvds_path %>
