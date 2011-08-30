@@ -8,6 +8,7 @@ class CreateDvds < ActiveRecord::Migration
       t.integer :anzahl
 	  t.string :bild
 	  t.string :genre
+	  t.string :tags
 
       t.timestamps
     end
