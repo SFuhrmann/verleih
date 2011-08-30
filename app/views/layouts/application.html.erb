@@ -26,7 +26,11 @@
 <% end %>
 &nbsp;&nbsp;
 <% if user_signed_in? %>
-  <%= link_to("#{current_user.name} abmelden", destroy_user_session_path, :methode => :delete) %>        
+  
+  <%= link_to("#{current_user.name} abmelden", destroy_user_session_path, :methode => :delete) %>
+  <% if current_user.role == "admin" %>
+      <%= link_to "Users" , users_path %>
+  <% end %>
 <% else %>
   <%= link_to('Login', new_user_session_path)  %>  
 <% end %>

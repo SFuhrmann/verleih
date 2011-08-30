@@ -1,12 +1,8 @@
 Verleih::Application.routes.draw do
   resources :searches
 
-  get "users/index"
-
-  get "users/show"
-
   devise_for :users
-
+  resources :users
   resources :dvds
 
   root :to => "pages#home"

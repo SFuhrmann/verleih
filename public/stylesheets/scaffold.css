@@ -105,3 +105,9 @@ body {
  text-align: center; 
  background: url(back.jpg);
 }
+
+
+#content td {
+padding: 20px;
+background: #eee;
+}
