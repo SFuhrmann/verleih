@@ -116,14 +116,15 @@ class DvdsController < ApplicationController
 					end
 				end
 			else
+				
 				@x = 0
 				@dvdslent = current_user.dvdslent.split("-")
-				current_user.dvdslent = ""
+				current_user.dvdslent = " "
 		
 				while @x < @dvdslent.size
 					if @dvdslent[@x] == @dvd.id.to_s
 						@dvdslent.delete(@x)
-					elsif current_user.dvdslent == ""
+					elsif current_user.dvdslent == " "
 						current_user.dvdslent = "#{@dvdslent[@x]}"
 					else
 						current_user.dvdslent = "#{current_user.dvdslent}-#{@dvdslent[@x]}"
@@ -132,11 +133,12 @@ class DvdsController < ApplicationController
 					
 
 				end
+				
 				@dvd.verliehen = @dvd.verliehen - 1
 				@x = 0
 				@dvdusers = @dvd.userids.split("-")
 				@dvd.userids = ""
-		
+				
 				while @x < @dvdusers.size
 					if @dvdusers[@x] == current_user.id.to_s
 						@dvdusers.delete(@x)
