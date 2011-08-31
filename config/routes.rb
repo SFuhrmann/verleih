@@ -1,5 +1,6 @@
 Verleih::Application.routes.draw do
     resources :searches
+    
 
   devise_for :users
   resources :users

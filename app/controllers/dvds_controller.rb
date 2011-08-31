@@ -71,95 +71,80 @@ class DvdsController < ApplicationController
   # PUT /dvds/1.xml
   def update
     @dvd = Dvd.find(params[:id])
-	
-	if current_user.role == "admin" || current_user.role == "mitarbeiter"
-		respond_to do |format|
-			if @dvd.update_attributes(params[:dvd])
-				format.html { redirect_to(@dvd, :notice => 'DVD wurde gespeichert.') }
-				format.xml  { head :ok }
-			else
-				format.html { render :action => "edit" }
-				format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
-			end
-		end
+    @user = User.all
+    if current_user.role == "admin" || current_user.role == "mitarbeiter"
+	respond_to do |format|
+	if @dvd.update_attributes(params[:dvd])
+	format.html { redirect_to(@dvd, :notice => 'DVD wurde gespeichert.') }
+	format.xml { head :ok }
 	else
-	
-		@dvdusers = @dvd.userids.split('-')
-		@x = 0
-	
-		while @x < @dvdusers.size
-			if @dvdusers[@x] == current_user.id.to_s
-				alreadylent = true
-			end
-			@x = @x + 1
-		end
-		if user_signed_in?
-			if alreadylent != true
-				@dvd.verliehen = @dvd.verliehen + 1
-				if @dvd.userids == ""
-					@dvd.userids = "#{current_user.id}"
-				else
-					@dvd.userids = "#{@dvd.userids}-#{current_user.id}"
-				end
-				if current_user.dvdslent == ""
-					current_user.dvdslent == "#{@dvd.id}"
-				else
-					current_user.dvdslent = "#{current_user.dvdslent}-#{@dvd.id}"
-				end
-				respond_to do |format|
-					if @dvd.update_attributes(params[:dvd])
-						format.html { redirect_to(@dvd, :notice => 'Dvd wurde erfolgreich ausgeliehen.') }
-						format.xml  { head :ok }
-					else
-						format.html { render :action => "edit" }
-						format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
-					end
-				end
-			else
-				@x = 0
-				@dvdslent = current_user.dvdslent.split("-")
-				current_user.dvdslent = ""
-		
-				while @x < @dvdslent.size
-					if @dvdslent[@x] == @dvd.id.to_s
-						@dvdslent.delete(@x)
-					elsif current_user.dvdslent == ""
-						current_user.dvdslent = "#{@dvdslent[@x]}"
-					else
-						current_user.dvdslent = "#{current_user.dvdslent}-#{@dvdslent[@x]}"
-					end
-					@x = @x + 1
-					
-
-				end
-				@dvd.verliehen = @dvd.verliehen - 1
-				@x = 0
-				@dvdusers = @dvd.userids.split("-")
-				@dvd.userids = ""
-		
-				while @x < @dvdusers.size
-					if @dvdusers[@x] == current_user.id.to_s
-						@dvdusers.delete(@x)
-					elsif @dvd.userids == ""
-						@dvd.userids = "#{@dvdusers[@x]}"
-					else
-						@dvd.userids = "#{@dvd.userids}-#{@dvdusers[@x]}"
-					end
-					@x = @x + 1
-					
-
-				end
-				respond_to do |format|
-						if @dvd.update_attributes(params[:dvd])
-							format.html { redirect_to(@dvd, :notice => 'DVD wurde erfolgreich zurueckgegeben.') }
-							format.xml  { head :ok }
-						else
-							format.html { render :action => "edit" }
-							format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
-						end
-				end
-			end
-		end
+	format.html { render :action => "edit" }
+	format.xml { render :xml => @dvd.errors, :status => :unprocessable_entity }
 	end
+	end
+	else
+
+	if user_signed_in?
+	@x = 0 
+	@y = false 
+	
+	@dvdusers = @dvd.userids.split("-") 
+while @x < @dvdusers.size 
+if @dvdusers[@x] == current_user.id.to_s 
+@y = true 
+end 
+@x = @x +1 
+end 
+if @y == true
+
+else
+
+end 
+if @y == true
+@dvd.verliehen = @dvd.verliehen + 1
+if @dvd.userids == ""
+@dvd.userids = "#{current_user.id}"
+else
+@dvd.userids = "#{@dvd.userids}-#{current_user.id}"
 end
+if current_user.dvdslent == ""
+current_user.dvdslent == "#{@dvd.id}"
+else
+current_user.dvdslent = "#{current_user.dvdslent}-#{@dvd.id}"
+end end end end
+
+	respond_to do |format|
+      if @dvd.update_attributes(params[:dvd])
+        format.html { redirect_to(@dvd, :notice => 'Änderungen gespeichert') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @dvd.errors, :status => :unprocessable_entity }
+      end
+    end
+   
+      
+
+      @user.each do |u|
+        if u.dvdslent.nil?
+        
+        else
+   		  usplit = u.dvdslent.split("-")
+   		  
+   		  if Dvd.userids.nil?
+   			u.dvdslent = 10000000
+   			u.save
+          else
+            usersplit = Dvd.userids.split("-")
+          end
+   		
+   		
+   		
+        
+    end
+  end
+
+    
+  end
+
 end

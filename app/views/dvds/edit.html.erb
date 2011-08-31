@@ -21,15 +21,6 @@
 <% if user_signed_in? %>
 	<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
 		<div class="field">
-			<% @dvdusers = @dvd.userids.split('-') %>
-			<% @x = 0 %>
-			<% while @x < @dvdusers.size %>
-				<%= @dvdusers[@x] %> 
-				<% @x = @x + 1 %>
-			<% end %>
-		</div>
-
-		<div class="field">
 			<%= f.label :name %><br />
 			<%= f.text_field :name %>	
 		</div>
@@ -54,32 +45,18 @@
 			<%= f.text_field :genre %>
 		</div>
 		<div class="field">
-			<%= f.label :dvdslent %><br />
-			<%= f.text_field :dvdslent %>
+			<%= f.label :userids %><br />
+			<%= f.text_field :userids %>
 		</div>
 		<div class="actions">
 				<%= f.submit "Speichern"%>
 		</div>
 		
 	<% else %>
-	<% @x = 0 %>
-	<% @y = false %>
-	<% @dvdusers = @dvd.userids.split("-") %>
-	<% while @x < @dvdusers.size %>
-		<% if @dvdusers[@x] == current_user.id.to_s %>
-			<% @y = true %>
-		<% end %>
-		<% @x = @x +1 %>
-	<% end %>
-	<% if @y == true%>
-		<div class="actions">
-			<%= f.submit "Zurueckgeben"%>
-		</div>
-	<% else %>
+	
 		<div class="actions">
 			<%= f.submit "Ausleihen"%>
 		</div>
-	<% end %>
 <% end %>
 <% end %>
 <% end %>
