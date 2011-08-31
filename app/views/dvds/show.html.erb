@@ -34,7 +34,7 @@
 	<% @users.each do |user| %>
 	<tr>
 	<% @x = 0 %>
-	<% while @x < @dvdusers %>
+	<% while @x < @dvdusers.size %>
 		<% if @dvdusers[@x] == user.id.to_s %>
 			<td><%= user.id %></td>
 			<td><%= user.name %></td>

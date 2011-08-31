@@ -14,7 +14,7 @@ class DvdsController < ApplicationController
   # GET /dvds/1.xml
   def show
     @dvd = Dvd.find(params[:id])
-
+	@users = User.all
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @dvd }
@@ -44,6 +44,7 @@ class DvdsController < ApplicationController
 	
 	@dvd.userids = ""
 	@dvd.verliehen = 0
+	@dvd.save
 
     respond_to do |format|
       if @dvd.save
@@ -71,7 +72,7 @@ class DvdsController < ApplicationController
   # PUT /dvds/1.xml
   def update
     @dvd = Dvd.find(params[:id])
-	
+	@user = User.all
 	if current_user.role == "admin" || current_user.role == "mitarbeiter"
 		respond_to do |format|
 			if @dvd.update_attributes(params[:dvd])
@@ -84,7 +85,7 @@ class DvdsController < ApplicationController
 		end
 	else
 	
-		@dvdusers = @dvd.userids.split('-')
+		@dvdusers = @user.split('-')
 		@x = 0
 	
 		while @x < @dvdusers.size
@@ -118,13 +119,16 @@ class DvdsController < ApplicationController
 			else
 				
 				@x = 0
+				if current_user.dvdslent.nil?
+				  @dvdslent = ""
+				end
 				@dvdslent = current_user.dvdslent.split("-")
-				current_user.dvdslent = " "
+				current_user.dvdslent = ""
 		
 				while @x < @dvdslent.size
 					if @dvdslent[@x] == @dvd.id.to_s
 						@dvdslent.delete(@x)
-					elsif current_user.dvdslent == " "
+					elsif current_user.dvdslent == ""
 						current_user.dvdslent = "#{@dvdslent[@x]}"
 					else
 						current_user.dvdslent = "#{current_user.dvdslent}-#{@dvdslent[@x]}"
@@ -162,6 +166,16 @@ class DvdsController < ApplicationController
 				end
 			end
 		end
+	end
+	  
+end
+	def destroy
+		@dvd = Dvd.find(params[:id])
+		@dvd.destroy
+
+		respond_to do |format|
+		format.html { redirect_to(dvds_url) }
+		format.xml  { head :ok }
 	end
 end
 end
