@@ -1,7 +1,7 @@
 <% if user_signed_in? %>
 		<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
 
-<h1>Listing Users</h1>
+<h1>Alle User</h1>
 
 <table>
   <tr>
@@ -16,9 +16,8 @@
   <tr>
     <td><%= user.id %></td>
     <td><%= user.name %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Zeigen', user %></td>
+    <td><%= link_to 'Loeschen', user, :confirm => 'Sicher?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

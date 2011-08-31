@@ -1,4 +1,4 @@
-<h1>New dvd</h1>
+<h1>Neue DVD</h1>
 <%= form_for(@dvd) do |f| %>
 <div class="field">
 			<%= f.label :name %><br />
@@ -7,6 +7,10 @@
 		<div class="field">
 			<%= f.label :beschreibung %><br />
 			<%= f.text_area :beschreibung, :size => '22x8' %>
+		</div>
+		<div class="field">
+			<%= f.label :tags %><br />
+			<%= f.text_field :tags %>
 		</div>
 		<div class="field">
 			<%= f.label :anzahl %><br />
