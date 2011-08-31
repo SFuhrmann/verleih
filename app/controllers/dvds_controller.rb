@@ -58,19 +58,9 @@ class DvdsController < ApplicationController
   end
 
   
-  #		while @x < @lendingusers.size
-#			if @dvd.userids == ""
-#				@dvd.userids = '#{@lendingusers[@x]}' 
-#			else 
-#				@dvd.userids = '#{@dvd.userids}, #{@lendingusers[@x]}' 
-#			end 
-#		end 
-  
-  
-  
-  # PUT /dvds/1
-  # PUT /dvds/1.xml
   def update
+
+
     @dvd = Dvd.find(params[:id])
 	@user = User.all
 	if current_user.role == "admin" || current_user.role == "mitarbeiter"
@@ -85,17 +75,26 @@ class DvdsController < ApplicationController
 		end
 	else
 	
-		@dvdusers = @user.split('-')
-		@x = 0
-	
-		while @x < @dvdusers.size
-			if @dvdusers[@x] == current_user.id.to_s
-				alreadylent = true
-			end
-			@x = @x + 1
-		end
-		if user_signed_in?
-			if alreadylent != true
+#		@dvdusers = @user.split('-')
+#		@x = 0
+#		alreadylent = false
+#		
+#		while @x < @dvdusers.size
+#			if @dvdusers[@x] == current_user.id.to_s
+#				alreadylent = true
+#			end
+#			@x = @x + 1
+#		end
+			@x = 0 
+			@y = false 
+			@dvdusers = @dvd.userids.split("-") 
+			while @x < @dvdusers.size 
+				if @dvdusers[@x] == current_user.id.to_s 
+					@y = true 
+				end 
+				@x = @x +1 
+			end 
+			if @y == false
 				@dvd.verliehen = @dvd.verliehen + 1
 				if @dvd.userids == ""
 					@dvd.userids = "#{current_user.id}"
@@ -167,15 +166,15 @@ class DvdsController < ApplicationController
 			end
 		end
 	end
-	  
-end
-	def destroy
+	 def destroy
 		@dvd = Dvd.find(params[:id])
 		@dvd.destroy
 
 		respond_to do |format|
 		format.html { redirect_to(dvds_url) }
 		format.xml  { head :ok }
-	end
+	end 
 end
+	
 end
+

@@ -68,7 +68,7 @@
 	<% end %>
 		<% if user_signed_in? %>
 			<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
-				<td><%= link_to 'Loeschen', dvd, :confirm => 'Sicher?', :method => :delete %></td>
+				<td><%= link_to 'Loeschen', dvd, :confirm => 'Sicher?', :method => :delete, :controller => :dvds%></td>
 			<% end %>
 		<% end %>
 	</tr>

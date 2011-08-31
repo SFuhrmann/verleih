@@ -2,7 +2,19 @@
 	<% if current_user.role == "admin" || current_user.role == "mitarbeiter" %>
 		<h1>DVD bearbeiten</h1>
 	<% else %>
-		<h1>DVD ausleihen</h1>
+	<% @x = 0 %>
+	<% @y = false %>
+	<% @dvdusers = @dvd.userids.split("-") %>
+	<% while @x < @dvdusers.size %>
+		<% if @dvdusers[@x] == current_user.id.to_s %>
+			<% @y = true %>
+		<% end %>
+		<% @x = @x +1 %>
+	<% end %>
+	<% if @y == true%>
+		<h1>DVD zurueckgeben</h1>
+	<% else %>
+<h1>DVD ausleihen</h1>	<% end %>
 	<%end%>
 <%end%>
 
