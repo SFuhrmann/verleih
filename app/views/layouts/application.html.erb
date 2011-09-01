@@ -23,6 +23,7 @@
 
 <% if user_signed_in? %>
   <%= link_to('Suche', :controller => 'searches' , :action => 'edit' , :id => current_user.id) %>&nbsp;&nbsp; 
+  <%= link_to("Meine Dvds", dvd_meine_path) %>
   <%= link_to('Account', edit_user_registration_path) %>&nbsp;&nbsp; 
   <%= link_to("#{current_user.name} abmelden", destroy_user_session_path, :methode => :delete) %>
   <% if current_user.role == "admin" %>

@@ -10,5 +10,5 @@ Verleih::Application.routes.draw do
 	
   match "/pages/kontakt"=>"pages#kontakt"
   match "/pages/impressum"=>"pages#impressum"
- 
+  match "dvd/meine" => "dvds#meine" 
 end

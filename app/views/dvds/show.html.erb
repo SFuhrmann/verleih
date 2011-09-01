@@ -21,8 +21,33 @@
 </p>
 <br>
 <p>
-  <b>Userids:</b>
-  <%= @dvd.userids %>
+<table>
+  <tr>
+    <th>User</th>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+<b>Verliehen an:</b>
+  <% @dvdusers = @dvd.userids.split('-') %>
+	<% @users.each do |user| %>
+	<tr>
+	<% @x = 0 %>
+	<% while @x < @dvdusers.size %>
+		<% if @dvdusers[@x] == user.id.to_s %>
+			<td><%= user.id %></td>
+			<td><%= user.name %></td>
+			<td><%= link_to 'Zeigen', user %></td>
+		<% end %>
+	<% end %>
+	
+		
+		
+	
+  </tr>
+<% end %>
+</table>
 </p>
 <br>
 <p>
